@@ -1,0 +1,46 @@
+CREATE TABLE Genre (
+GenreID SERIAL PRIMARY KEY,
+Genre_Name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Singer(
+SingerID SERIAL PRIMARY KEY,
+Singer_Name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Singer_Genre(
+GenreID int REFERENCES Genre(GenreID),
+SingerID int REFERENCES Singer(SingerID),
+PRIMARY KEY(GenreID, SingerID)
+);
+
+CREATE TABLE Albums(
+AlbumID SERIAL PRIMARY KEY,
+Album_Name VARCHAR(100) NOT NULL UNIQUE,
+Date DATE NOT NULL
+);
+
+CREATE TABLE Singer_Albums(
+AlbumID int REFERENCES Albums(AlbumID),
+SingerID int REFERENCES Singer(SingerID),
+PRIMARY KEY(AlbumID, SingerID)
+);
+
+CREATE TABLE Collection(
+CollectionID SERIAL PRIMARY KEY,
+Collection_Name VARCHAR(100) NOT NULL UNIQUE,
+Release_Year DATE NOT NULL
+);
+
+CREATE TABLE Song(
+SongID SERIAL PRIMARY KEY,
+Duration INTEGER NOT NULL,
+Song_Name VARCHAR(100) NOT NULL,
+FK_AlbumID int REFERENCES Albums(AlbumID)
+);
+
+CREATE TABLE Collection_Song(
+CollectionID int REFERENCES Collection(CollectionID),
+SongID int REFERENCES Song(SongID),
+PRIMARY KEY(CollectionID, SongID)
+);
